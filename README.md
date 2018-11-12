@@ -8,7 +8,8 @@ WeatherStation une diferentes tecnologías para conseguir su propósito. Los ele
 
 ## Documentation
 
-See (https://github.com/jpmeijers/misol-lorawan/blob/master/README.md)
+	(https://learn.sparkfun.com/tutorials/arduino-weather-shield-hookup-guide-v12)
+	(https://github.com/jpmeijers/misol-lorawan/blob/master/README.md)
 
 ## Installing
 
