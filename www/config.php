@@ -3,6 +3,8 @@
 define ("def_graph_width", 400);
 define ("def_graph_height", 300);
 
+$ValidUsers=array(array("user"=>"jc",   "inputkey"=>"xxxxxxxxx"),
+                  array("user"=>"user2","inputkey"=>"xxxxxxxxx"));
 $validusers=array("jc","rbk");
 $diferencedays=60; // DIAS DE DIFERENCIA PERMITIDOS A MOSTRAR EN CONSULTA
 
@@ -11,13 +13,51 @@ $diferencedays=60; // DIAS DE DIFERENCIA PERMITIDOS A MOSTRAR EN CONSULTA
 define("save_each",4*60*60); // 4 horas
 
 
-$db=mysqli_connect("127.0.0.1","tiempo","MvhY2SIieNzar2v","tiempo");
+$db=@mysqli_connect("127.0.0.1","tiempo","xxxxxxxx","tiempo");
 if(!$db){
     echo "Error: No se pudo conectar a MySQL." . "<br/>";
     echo "errno: " . mysqli_connect_errno() . "<br/>";
     echo "error: " . mysqli_connect_error() . "<br/>";
     exit;
 }
+
+$appname="weatherstation";
+$rutalanguage=__DIR__."/locale";
+
+$idioma="en_US.utf8";
+if(isset($_GET["lang"])){
+        if(strcasecmp($_GET["lang"],"es")==0){
+                $idioma="es";
+                @setcookie('idioma','es');
+        }
+    else @setcookie('idioma','en_US.utf8');
+}else{
+        if(isset($_COOKIE['idioma']))  if(strcasecmp($_COOKIE['idioma'],"es")==0) $idioma="es";
+}
+//die($idioma."--3");
+
+if(strcasecmp($idioma,"en_US.utf8")==0){	
+        @putenv ("LANG=$idioma");
+        @putenv ("LC_ALL=$idioma");
+        @setlocale(LC_ALL, $idioma);
+
+        @bindtextdomain($appname, "$rutalanguage");
+        @textdomain($appname);
+		
+}else{ // el setlocale fallaría, se conserva el idioma original
+        @putenv ("LANG=$idioma");
+        @putenv ("LC_ALL=$idioma");
+        @setlocale(LC_ALL, $idioma);
+
+        @bindtextdomain($appname, "$rutalanguage");
+        @textdomain($appname);
+}
+
+@date_default_timezone_set("Europe/Madrid");
+
+return;
+
+
 
 //---------------------------------------------------------------
 function YmdToTimeStamp($fecha,&$mkf){ //Y-m-d

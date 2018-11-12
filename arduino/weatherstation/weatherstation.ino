@@ -1,44 +1,62 @@
 /*
- Weather Shield Example
- By: Nathan Seidle
- SparkFun Electronics
- Date: November 16th, 2013
- License: This code is public domain but you buy me a beer if you use this and we meet someday (Beerware license).
 
- Much of this is based on Mike Grusin's USB Weather Board code: https://www.sparkfun.com/products/10586
+	SergioTas 2018
+	License: This code is public domain but you buy me a beer if you use this and we meet someday (Beerware license).
 
- This is a more advanced example of how to utilize every aspect of the weather shield. See the basic
- example if you're just getting started.
 
- This code reads all the various sensors (wind speed, direction, rain gauge, humidty, pressure, light, batt_lvl)
- and reports it over the serial comm port. This can be easily routed to an datalogger (such as OpenLog) or
- a wireless transmitter (such as Electric Imp).
-
- Measurements are reported once a second but windspeed and rain gauge are tied to interrupts that are
- calcualted at each report.
-
- This example code assumes the GPS module is not used.
+	Based on: 	Weather Shield Example
+	By: Nathan Seidle
+	SparkFun Electronics
 
  */
+
+/*
+ Libreria:  https://github.com/UIPEthernet/UIPEthernet 
+ En UIPEthernet/utility/uipethernet-conf.h establecer:
+ #define UIP_CONF_MAX_CONNECTIONS 1
+*/
+
+#include <UIPEthernet.h>
+#include <Dns.h>
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------------
 #define SendDataEach 15  //  segundos/seconds
 
-// DISABLED DHCP & UDP
-#define SetMyIP 10,168,101,177
-#define MyGateway 10,168,101,1
 
-#define user "jc"
+uint8_t mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 }; // define (unique on LAN) hardware (MAC) address
+
+//#define MYFIXIP
+#ifdef MYFIXIP
+  #define SetMyIP 10,168,101,177
+  #define MyGateway 10,168,101,1
+#else
+   // DHCP
+#endif
 
 // destination  http://<DestIP>:<DestPort>/inputs/index.php?
-#define DestIP  10,168,101,60
-#define DestPort 8083
-uint8_t mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 }; // define (unique on LAN) hardware (MAC) address
+#define dst_items   1 // Puedes enviar los datos a varios sitios simultaneamente añadiendo elementos al array
+IPAddress dst_ip  [dst_items] = { IPAddress(10,168,101,60) };
+int       dst_port[dst_items] = { 8088 };
+char *    dst_name[dst_items] = { "weather.mydomain.org"};
+char *        user[dst_items] = {"user"};
+char *     userkey[dst_items] = {"X010101xxX"}; 
+
+
+/* Enviar datos a varios sitios a la vez
+// destination  http://<DestIP>:<DestPort>/inputs/index.php?
+#define dst_items   2
+IPAddress dst_ip  [dst_items] = { IPAddress(192,168,10,19),  IPAddress(1,1,1,2) };
+int       dst_port[dst_items] = { 8088,                      8081 };
+char *    dst_name[dst_items] = { "tiempo.midominio.org",   "weather.mydomain.org" };
+char *        user[dst_items] = {"user1",                  "user2"};
+char *     userkey[dst_items] = {"xxxxxxxxx",              "222222222"}; 
+*/
 //------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------------
+
 #include <avr/wdt.h>
 
 #include <Wire.h> //I2C needed for sensors
@@ -46,8 +64,6 @@ uint8_t mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 }; // define (unique on LAN) h
 #include "SparkFunHTU21D.h" //Humidity sensor - Search "SparkFun HTU21D" and install from Library Manager
 
 
-// https://github.com/UIPEthernet/UIPEthernet 
-#include <UIPEthernet.h>
 EthernetClient client;
 
 unsigned long previousMilis;
@@ -122,7 +138,7 @@ float light_lvl = 455; //[analog value from 0 to 1023]
 // volatiles are subject to modification by IRQs
 //float rainin = 0; // [rain inches over the past hour)] -- the accumulated rainfall in the past 60 min
 //volatile float dailyrainin = 0; // [rain inches so far today in local time]
-volatile float llueve=0;
+volatile short llueve=0;
 volatile unsigned long raintime, rainlast, raininterval, rain;
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -178,15 +194,19 @@ void setup()
     pinMode(REFERENCE_3V3, INPUT);
     pinMode(LIGHT, INPUT);
 
-
 //------------------------------------------------------------------------------
-
+#ifdef MYFIXIP
   IPAddress myip(SetMyIP);
   IPAddress mydns(8,8,8,8);
   IPAddress mygw(MyGateway);
   IPAddress mysnet(255,255,255,0);
   Ethernet.begin(mymac,myip,mydns,mygw,mysnet);
-/*
+#else  
+  // dhcp
+  Ethernet.begin(mymac);
+#endif  
+  
+
   Serial.print("localIP: ");
   Serial.println(Ethernet.localIP());
   Serial.print("subnetMask: ");
@@ -195,7 +215,7 @@ void setup()
   Serial.println(Ethernet.gatewayIP());
   Serial.print("dnsServerIP: ");
   Serial.println(Ethernet.dnsServerIP());
-  */
+  
 //------------------------------------------------------------------------------
 
     //Configure the pressure sensor
@@ -284,101 +304,132 @@ void loop()
     if(millis()-previousMilis>SendDataEach*1000){ // Cada x segundos
       
       previousMilis+=SendDataEach*1000;
+      short j;
+      for(j=0;j<dst_items;j++){
 
-      if (client.connect(IPAddress(DestIP),DestPort)){
-//          Serial.println("connected");
-
-          char cadena[10];
-          client.print("GET /inputs/index.php?");
-          client.print("usr=");
-          client.print(user);
-          client.print("&");
-
-          client.print("sec=");
-          client.print(SendDataEach);
-          client.print("&");
-
-          client.print("tempf=");
-          dtostrf(tempf,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-          
-          client.print("winddir=");
-          dtostrf(winddir,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-
-          client.print("windspeedmph=");
-          dtostrf(windspeedmph,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-
-          client.print("windgustmph=");
-          dtostrf(windgustmph,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-
-          client.print("windgustdir=");
-          dtostrf(windgustdir,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-
-          client.print("windspdmph_avg=");
-          dtostrf(windspdmph_avg,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-
-          client.print("winddir_avg=");
-          dtostrf(winddir_avg,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-          
-          client.print("humidity=");
-          dtostrf(humidity,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-
-          // Acumulado los ultimos SendEachData
-          client.print("rainin=");
-          dtostrf(llueve,3,2,cadena);
-          llueve=0;
-          client.print(cadena);
-          client.print("&");
-          
-          client.print("pressure=");
-          dtostrf(pressure,3,2,cadena);
-          client.print(cadena);
-          client.print("&");
-                    
-          client.print("light_lvl=");
-          dtostrf(light_lvl,3,2,cadena);
-          client.print(cadena);
-
-          client.print(" HTTP/1.1\r\n");
-          client.print("Host: 192.168.1.10\r\n");
-          client.print("Content-Type: ");
-          client.print("application/x-www-form-urlencoded\r\n\r\n");
-          while(client.available()==0)
-            {
-              if (previousMilis - millis() < 0)
-                goto close;
-            }
-            
-          int size;
-          while((size=client.available())>0){
-             size = client.read(cadena,min(size,sizeof(cadena)));
-             Serial.write(cadena,size);
-          }
-          Serial.println("\r\n");
-
-close:
-          //disconnect client
-//          Serial.println("disconnect");
-          client.stop();
-     }else{
-        Serial.println("connect failed");
-     }
+  /*      
+        IPAddress ipdst=dst_ip[j];
+        DNSClient ldns;
+        if(dst_name[j]!="") {
+          ldns.begin(Ethernet.dnsServerIP());  
+          if(ldns.getHostByName(dst_name[j],ipdst)==1){
+            Serial.print(dst_name[j]);
+            Serial.print(" = ip =");
+            Serial.println(dst_ip[j]);
+          }else Serial.println("dns lookup failed");
+        }
+*/
+        if (client.connect(dst_ip[j],dst_port[j])){
+              Serial.print("##connected ");
+              Serial.print(dst_ip[j]);
+              Serial.print(":");
+              Serial.print(dst_port[j]);
+              Serial.print(" (");              
+              Serial.print(dst_name[j]);
+              Serial.println(")");
               
+    
+              char cadena[10];
+              client.print("GET /inputs/index.php?");
+              
+              client.print("user=");
+              client.print(user[j]);
+              client.print("&");
+
+              client.print("key=");
+              client.print(userkey[j]);
+              client.print("&");
+
+              client.print("sec=");
+              client.print(SendDataEach);
+              client.print("&");
+    
+              client.print("tempf=");
+              dtostrf(tempf,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+              
+              client.print("winddir=");
+              dtostrf(winddir,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+    
+              client.print("windspeedmph=");
+              dtostrf(windspeedmph,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+    
+              client.print("windgustmph=");
+              dtostrf(windgustmph,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+    
+              client.print("windgustdir=");
+              dtostrf(windgustdir,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+    
+              client.print("windspdmph_avg=");
+              dtostrf(windspdmph_avg,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+    
+              client.print("winddir_avg=");
+              dtostrf(winddir_avg,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+              
+              client.print("humidity=");
+              dtostrf(humidity,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+    
+              // Acumulado los ultimos SendEachData
+              client.print("rainin=");
+//              dtostrf(llueve,3,2,cadena);
+              llueve=0;
+//              client.print(cadena);
+              client.print(llueve);
+              client.print("&");
+              
+              client.print("pressure=");
+              dtostrf(pressure,3,2,cadena);
+              client.print(cadena);
+              client.print("&");
+                        
+              client.print("light_lvl=");
+              dtostrf(light_lvl,3,2,cadena);
+              client.print(cadena);
+    
+              client.print(" HTTP/1.1\r\n");
+//              client.print("Host: tiempo.avisame.club\r\n");
+              client.print("Host: ");
+              client.print(dst_name[j]);
+              client.print("\r\n");
+              client.print("Content-Type: ");
+              client.print("application/x-www-form-urlencoded\r\n\r\n");
+              while(client.available()==0)
+                {
+                  if (previousMilis - millis() < 0)
+                    goto close;
+                }
+                
+              int size;
+              while((size=client.available())>0){
+                 size = client.read(cadena,min(size,sizeof(cadena)));
+                 Serial.write(cadena,size);
+              }
+              Serial.println("\r\n");
+    
+    close:
+              //disconnect client
+    //          Serial.println("disconnect");
+              client.stop();
+         }else{
+            Serial.println("connect failed");
+         }
+              
+      } // for
       
     } // tiempo
         

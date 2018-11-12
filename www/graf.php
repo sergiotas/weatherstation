@@ -2,8 +2,8 @@
 
   include "config.php";
 
-  if(!isset($_GET["usr"])) die("not user");
-  $user=substr(trim($_GET["usr"]),0,30);
+  if(!isset($_GET["user"])) die("not user");
+  $user=substr(trim($_GET["user"]),0,30);
 
   $existuser=false;
   for($i=0;$i<count($validusers);$i++){
@@ -70,34 +70,34 @@
   
   if(strcasecmp($q,"tempc")==0){
 	  $fld="tempc";
-	  $tit="T ?C ";
+	  $tit=_("Temperatura")." &#xb0;C";
   }elseif(strcasecmp($q,"windspeed")==0){
 	  $fld="windspeedkmh";
-	  $tit="V Km/h";
+	  $tit=_("Viento")." Km/h";
   }elseif(strcasecmp($q,"winddir")==0){
 	  $fld="winddir";
-	  $tit="Dir";
+	  $tit=_("Dirección");
   }elseif(strcasecmp($q,"rainin")==0){
 	  $fld="rainin";
-	  $tit="R";
+	  $tit=_("Lluvia");
   }elseif(strcasecmp($q,"pressure")==0){
 	  $fld="pressure";
-	  $tit="P";
+	  $tit=_("Presión");
   }elseif(strcasecmp($q,"humidity")==0){
 	  $fld="humidity";
-	  $tit="H";
+	  $tit=_("Humedad");
   }elseif(strcasecmp($q,"light_lvl")==0){
 	  $fld="light_lvl";
-	  $tit="L";
+	  $tit=_("Luz");
   }elseif(strcasecmp($q,"windgustkmh")==0){
 	  $fld="windgustkmh";
 	  $tit="G km/h";
   }elseif(strcasecmp($q,"windspdkmh_avg")==0){
 	  $fld="windspdkmh_avg";
-	  $tit="V Avg Km/h";
+	  $tit=_("Viento")." Avg Km/h";
   }elseif(strcasecmp($q,"winddir_avg")==0){
 	  $fld="winddir_avg";
-  	  $tit="D";
+  	  $tit=_("Dirección")." Avg Km/h";
   }else{
 		  die("invalid type 2");
   }
@@ -105,10 +105,10 @@
 
   if(strcasecmp($tipo,"sum")==0){
 	  $funcion="sum";
-	  $titfunc="Acumulado";
+	  $titfunc=_("Acumulado");
   }else{
 	  $funcion="avg";
-	  $titfunc="Promedio";
+	  $titfunc=_("Promedio");
   }
   
   $tabla=$user."_disk";
@@ -238,34 +238,36 @@
 		$minant=substr($rowant["fecha"],14,2);
 		$horasig=substr($rowsig["fecha"],11,2);
 		$minsig=substr($rowsig["fecha"],14,2);
-		if($dias==1)
-			imageline($im,$left+$horaant*$auxx+$minant*$auxx/60,
-					  $top+(($rowmm["maximo"]-$rowant["promedio"])*$auxy)/$salto,
-					  $left+$horasig*$auxx+$minsig*$auxx/60,
-					  $top+(($rowmm["maximo"]-$rowsig["promedio"])*$auxy)/$salto,
-					  $red);					  
-		else{
-//			$antd=intdiv(($fant-$mkf1),86400);
-			$antd=($fant-$mkf1-($fant-$mkf1)%86400)/86400; 
-			$anth=($fant-$mkf1)%86400;
-//			$sigd=intdiv(($fsig-$mkf1),86400);
-			$sigd=($fsig-$mkf1-($fsig-$mkf1)%86400)/86400; 
-			$sigh=($fsig-$mkf1)%86400;
-			
-			imageline($im,$left+$antd*$auxx+ $anth*$auxx/86400,
-					  $top+(($rowmm["maximo"]-$rowant["promedio"])*$auxy)/$salto,
-					  $left+$sigd*$auxx+$sigh*$auxx/86400,
-					  $top+(($rowmm["maximo"]-$rowsig["promedio"])*$auxy)/$salto,
-					  $red);					  
+		if($salto!=0){
+			if($dias==1)
+				imageline($im,$left+$horaant*$auxx+$minant*$auxx/60,
+						  $top+(($rowmm["maximo"]-$rowant["promedio"])*$auxy)/$salto,
+						  $left+$horasig*$auxx+$minsig*$auxx/60,
+						  $top+(($rowmm["maximo"]-$rowsig["promedio"])*$auxy)/$salto,
+						  $red);					  
+			else{
+	//			$antd=intdiv(($fant-$mkf1),86400);
+				$antd=($fant-$mkf1-($fant-$mkf1)%86400)/86400; 
+				$anth=($fant-$mkf1)%86400;
+	//			$sigd=intdiv(($fsig-$mkf1),86400);
+				$sigd=($fsig-$mkf1-($fsig-$mkf1)%86400)/86400; 
+				$sigh=($fsig-$mkf1)%86400;
+				
+				imageline($im,$left+$antd*$auxx+ $anth*$auxx/86400,
+						  $top+(($rowmm["maximo"]-$rowant["promedio"])*$auxy)/$salto,
+						  $left+$sigd*$auxx+$sigh*$auxx/86400,
+						  $top+(($rowmm["maximo"]-$rowsig["promedio"])*$auxy)/$salto,
+						  $red);					  
+			}
 		}
 		$rowant=$rowsig;
 
 	} // while
 	
   if($mkf1==$mkf2){ // day
-     $tit="horas";
+     $tit=_("horas");
   }else{
-     $tit="días";
+     $tit=_("días");
   }
   
   $type_space = imagettfbbox($font_size, 0, $font_file, "$tit");

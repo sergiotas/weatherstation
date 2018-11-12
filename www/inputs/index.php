@@ -3,12 +3,17 @@
 include "../config.php";
 
 
-if(!isset($_GET["usr"])) die("not user");
-$user=substr(trim($_GET["usr"]),0,30);
+if(!isset($_GET["user"])) die("not user");
+$user=substr(trim($_GET["user"]),0,30);
+
+if(!isset($_GET["key"])) die("not key");
+$key=substr(trim($_GET["key"]),0,30);
+
 
 $existuser=false;
-for($i=0;$i<count($validusers);$i++){
-	if($validusers[$i]==$user) {
+for($i=0;$i<count($ValidUsers);$i++){
+	if(strcmp($ValidUsers[$i]["user"],   $user)==0&&
+	   strcmp($ValidUsers[$i]["inputkey"],$key)==0) {
 		$existuser=true;
 		break;
 	}
@@ -42,6 +47,7 @@ if(isset($_GET["light_lvl"])) $light_lvl=$_GET["light_lvl"];
 
 // Convert Farenheit to Celsius
 $tempc=(($tempf-32)*5)/9;
+$tempc-=5; // ?? Hay un bug que hace que la temperatura vaya por encia
 // Convert mph to kmh
 $windspeedkmh=$windspeedmph*1.609344;
 $windgustkmh=$windgustmph*1.609344;
