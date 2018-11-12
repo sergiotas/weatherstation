@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-12 12:21+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: index.php:7 graf.php:111
+msgid "Promedio"
+msgstr ""
+
+#: index.php:8 graf.php:108
+msgid "Acumulado"
+msgstr ""
+
+#: index.php:10 index.php:363 graf.php:73
+msgid "Temperatura"
+msgstr ""
+
+#: index.php:11 index.php:320 graf.php:76 graf.php:97
+msgid "Viento"
+msgstr ""
+
+#: index.php:12
+msgid "Direcc."
+msgstr ""
+
+#: index.php:13 index.php:19 index.php:411 graf.php:82
+msgid "Lluvia"
+msgstr ""
+
+#: index.php:14 graf.php:88
+msgid "Humedad"
+msgstr ""
+
+#: index.php:15
+msgid "Presi&oacute;n"
+msgstr ""
+
+#: index.php:16 graf.php:91
+msgid "Luz"
+msgstr ""
+
+#: index.php:17
+msgid "Viento Avg"
+msgstr ""
+
+#: index.php:18
+msgid "Direcc. Avg"
+msgstr ""
+
+#: index.php:69
+msgid "Desde"
+msgstr ""
+
+#: index.php:69
+msgid "hasta"
+msgstr ""
+
+#: index.php:180
+msgid "Inic"
+msgstr ""
+
+#: index.php:184
+msgid "Fin"
+msgstr ""
+
+#: index.php:204
+msgid "Elegir Opciones"
+msgstr ""
+
+#: index.php:493
+msgid "Estaci&oacute;n Metereol&oacute;gica"
+msgstr ""
+
+#: index.php:533
+msgid "&Uacute;timo"
+msgstr ""
+
+#: graf.php:79 graf.php:100
+msgid "Dirección"
+msgstr ""
+
+#: graf.php:85
+msgid "Presión"
+msgstr ""
+
+#: graf.php:268
+msgid "horas"
+msgstr ""
+
+#: graf.php:270
+msgid "días"
+msgstr ""
