@@ -179,7 +179,7 @@ global $lsOPT,$lsTYPE;
 	echo "<table><tr>".
 		"<td style=\"height:25px\">"._("Inic").": </td>".
 		"<td style=\"height:25px\"><input name=\"txtfecha1\" id=\"txtfecha1\" type=\"datapicker\" value=\"".($fecha1==""?date("Y-m-d",$ayer):$fecha1)."\" style=\"width:110px;\"></td> ".
-		"<td style=\"height:25px\"><input name=\"botDo\" id=\"botDo\" type=\"submit\" data-inline=\"true\" value=\"Ir\" data-mini=\"true\"></td>".
+		"<td style=\"height:25px\"><input name=\"botDo\" id=\"botDo\" type=\"submit\" data-inline=\"true\" value=\""._("Ir")."\" data-mini=\"true\"></td>".
 		"</tr><tr>".
 		"<td style=\"height:25px\">"._("Fin").": </td>".
 		"<td style=\"height:25px\"><input name=\"txtfecha2\" id=\"txtfecha2\" type=\"datapicker\" value=\"".($fecha2==""?date("Y-m-d",$ayer):$fecha2)."\" style=\"width:110px;\"></td> ".
