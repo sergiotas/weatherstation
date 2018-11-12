@@ -13,13 +13,14 @@ See (https://github.com/jpmeijers/misol-lorawan/blob/master/README.md)
 ## Installing
 
 ### Prerequisites Arduino 
-- Hardware
+#### Hardware
 	Arduino One 
 	SparkFun Weather Shield DEV-13956
 	Mini ENC28J60 Ethernet LAN Network Module
 	Weather Meters
 	See [Arduino forum](https://forum.arduino.cc/index.php?topic=575976.0)
-- Libraries
+	
+#### Libraries
 	(https://github.com/UIPEthernet/UIPEthernet)
 	(https://github.com/sparkfun/SparkFun_MPL3115A2_Breakout_Arduino_Library)
 	(https://github.com/sparkfun/SparkFun_HTU21D_Breakout_Arduino_Library)
@@ -35,6 +36,10 @@ See (https://github.com/jpmeijers/misol-lorawan/blob/master/README.md)
 	JQuery Mobile 1.4.5
 	JQuery 1.12.4
 	
+## Example
+
+Home Weather Sation (http://tiempo.avisame.club:8088/)
+
 ## License
 
  License: This code is public domain but you buy me a beer if you use this and we meet someday (Beerware license).
