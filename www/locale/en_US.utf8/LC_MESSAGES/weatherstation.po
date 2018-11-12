@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-12 19:23+0100\n"
-"PO-Revision-Date: 2018-11-12 19:32+0100\n"
+"PO-Revision-Date: 2018-11-12 19:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -86,7 +86,6 @@ msgid "Elegir Opciones"
 msgstr "Choose Options"
 
 #: ../index.php:437
-#, fuzzy
 msgid "Estación Metereológica"
 msgstr "Weather Station"
 

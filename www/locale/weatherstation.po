@@ -3,104 +3,113 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-12 12:21+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-11-12 19:23+0100\n"
+"PO-Revision-Date: 2018-11-12 12:47+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
 
-#: index.php:7 graf.php:111
+#: ../index.php:7 ../graf.php:111
 msgid "Promedio"
-msgstr ""
+msgstr "Average"
 
-#: index.php:8 graf.php:108
+#: ../index.php:8 ../graf.php:108
 msgid "Acumulado"
-msgstr ""
+msgstr "Accumulated"
 
-#: index.php:10 index.php:363 graf.php:73
+#: ../index.php:10 ../index.php:363 ../graf.php:73
 msgid "Temperatura"
-msgstr ""
+msgstr "Temperature"
 
-#: index.php:11 index.php:320 graf.php:76 graf.php:97
+#: ../index.php:11 ../index.php:320 ../graf.php:76 ../graf.php:97
 msgid "Viento"
-msgstr ""
+msgstr "Wind"
 
-#: index.php:12
+#: ../index.php:12
 msgid "Direcc."
-msgstr ""
+msgstr "Direction"
 
-#: index.php:13 index.php:19 index.php:411 graf.php:82
+#: ../index.php:13 ../index.php:19 ../index.php:411 ../graf.php:82
 msgid "Lluvia"
-msgstr ""
+msgstr "Rain"
 
-#: index.php:14 graf.php:88
+#: ../index.php:14 ../graf.php:88
 msgid "Humedad"
-msgstr ""
+msgstr "Humidity"
 
-#: index.php:15
+#: ../index.php:15
 msgid "Presi&oacute;n"
-msgstr ""
+msgstr "Pressure"
 
-#: index.php:16 graf.php:91
+#: ../index.php:16 ../graf.php:91
 msgid "Luz"
-msgstr ""
+msgstr "Light"
 
-#: index.php:17
+#: ../index.php:17
 msgid "Viento Avg"
-msgstr ""
+msgstr "Wind Avg"
 
-#: index.php:18
+#: ../index.php:18
 msgid "Direcc. Avg"
-msgstr ""
+msgstr "Direc. Avg"
 
-#: index.php:69
+#: ../index.php:69
 msgid "Desde"
-msgstr ""
+msgstr "Since"
 
-#: index.php:69
+#: ../index.php:69
 msgid "hasta"
-msgstr ""
+msgstr "until"
 
-#: index.php:180
+#: ../index.php:180
 msgid "Inic"
+msgstr "Init"
+
+#: ../index.php:182
+msgid "Ir"
 msgstr ""
 
-#: index.php:184
+#: ../index.php:184
 msgid "Fin"
-msgstr ""
+msgstr "End"
 
-#: index.php:204
+#: ../index.php:204
 msgid "Elegir Opciones"
-msgstr ""
+msgstr "Choose Options"
 
-#: index.php:493
+#: ../index.php:437
+#, fuzzy
+msgid "Estación Metereológica"
+msgstr "Weather Station"
+
+#: ../index.php:516
 msgid "Estaci&oacute;n Metereol&oacute;gica"
-msgstr ""
+msgstr "Weather Station"
 
-#: index.php:533
+#: ../index.php:556
 msgid "&Uacute;timo"
-msgstr ""
+msgstr "Last"
 
-#: graf.php:79 graf.php:100
+#: ../graf.php:79 ../graf.php:100
 msgid "Dirección"
-msgstr ""
+msgstr "Direction"
 
-#: graf.php:85
+#: ../graf.php:85
 msgid "Presión"
-msgstr ""
+msgstr "Pressure"
 
-#: graf.php:268
+#: ../graf.php:268
 msgid "horas"
-msgstr ""
+msgstr "hours"
 
-#: graf.php:270
+#: ../graf.php:270
 msgid "días"
-msgstr ""
+msgstr "days"
