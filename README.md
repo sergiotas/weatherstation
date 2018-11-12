@@ -36,6 +36,10 @@ See (https://github.com/jpmeijers/misol-lorawan/blob/master/README.md)
 	JQuery Mobile 1.4.5
 	JQuery 1.12.4
 	
+## Example
+
+Home Weather Sation (http://tiempo.avisame.club:8088/)
+
 ## License
 
  License: This code is public domain but you buy me a beer if you use this and we meet someday (Beerware license).
