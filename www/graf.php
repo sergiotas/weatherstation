@@ -6,8 +6,8 @@
   $user=substr(trim($_GET["user"]),0,30);
 
   $existuser=false;
-  for($i=0;$i<count($validusers);$i++){
-		if($validusers[$i]==$user) {
+  for($i=0;$i<count($ValidUsers);$i++){
+		if($ValidUsers[$i]["user"]==$user) {
 			$existuser=true;
 			break;
 		}
@@ -70,34 +70,34 @@
   
   if(strcasecmp($q,"tempc")==0){
 	  $fld="tempc";
-	  $tit=_("Temperatura")." &#xb0;C";
+	  $tit=_("Temperature")." &#xb0;C";
   }elseif(strcasecmp($q,"windspeed")==0){
 	  $fld="windspeedkmh";
-	  $tit=_("Viento")." Km/h";
+	  $tit=_("Wind")." Km/h";
   }elseif(strcasecmp($q,"winddir")==0){
 	  $fld="winddir";
-	  $tit=_("Dirección");
+	  $tit=_("Direction");
   }elseif(strcasecmp($q,"rainin")==0){
 	  $fld="rainin";
-	  $tit=_("Lluvia");
+	  $tit=_("Rain");
   }elseif(strcasecmp($q,"pressure")==0){
 	  $fld="pressure";
-	  $tit=_("Presión");
+	  $tit=_("Pressure");
   }elseif(strcasecmp($q,"humidity")==0){
 	  $fld="humidity";
-	  $tit=_("Humedad");
+	  $tit=_("Humidity");
   }elseif(strcasecmp($q,"light_lvl")==0){
 	  $fld="light_lvl";
-	  $tit=_("Luz");
+	  $tit=_("Light");
   }elseif(strcasecmp($q,"windgustkmh")==0){
 	  $fld="windgustkmh";
-	  $tit="G km/h";
+	  $tit="WindGust km/h";
   }elseif(strcasecmp($q,"windspdkmh_avg")==0){
 	  $fld="windspdkmh_avg";
-	  $tit=_("Viento")." Avg Km/h";
+	  $tit=_("Wind")." Avg Km/h";
   }elseif(strcasecmp($q,"winddir_avg")==0){
 	  $fld="winddir_avg";
-  	  $tit=_("Dirección")." Avg Km/h";
+  	  $tit=_("Direction")." Avg Km/h";
   }else{
 		  die("invalid type 2");
   }
@@ -105,10 +105,10 @@
 
   if(strcasecmp($tipo,"sum")==0){
 	  $funcion="sum";
-	  $titfunc=_("Acumulado");
+	  $titfunc=_("Accumulated");
   }else{
 	  $funcion="avg";
-	  $titfunc=_("Promedio");
+	  $titfunc=_("Average");
   }
   
   $tabla=$user."_disk";
@@ -265,9 +265,9 @@
 	} // while
 	
   if($mkf1==$mkf2){ // day
-     $tit=_("horas");
+     $tit=_("hours");
   }else{
-     $tit=_("días");
+     $tit=_("days");
   }
   
   $type_space = imagettfbbox($font_size, 0, $font_file, "$tit");

@@ -4,19 +4,19 @@
 
 include "config.php";
 
-  $lsTYPE[]=array("id"=>1,"type"=>"avg","name"=>_("Promedio"));
-  $lsTYPE[]=array("id"=>2,"type"=>"sum","name"=>_("Acumulado"));
+  $lsTYPE[]=array("id"=>1,"type"=>"avg","name"=>_("Average"));
+  $lsTYPE[]=array("id"=>2,"type"=>"sum","name"=>_("Accumulated"));
   
-  $lsOPT[]=array("id"=>1, "name"=>_("Temperatura"),   "type"=>1, "bydef"=>1);
-  $lsOPT[]=array("id"=>2, "name"=>_("Viento"),        "type"=>1, "bydef"=>1);
-  $lsOPT[]=array("id"=>3, "name"=>_("Direcc."),       "type"=>1, "bydef"=>1);
-  $lsOPT[]=array("id"=>4, "name"=>_("Lluvia"),        "type"=>1, "bydef"=>1);
-  $lsOPT[]=array("id"=>5, "name"=>_("Humedad"),       "type"=>1, "bydef"=>0);
-  $lsOPT[]=array("id"=>6, "name"=>_("Presi&oacute;n"),"type"=>1, "bydef"=>0);
-  $lsOPT[]=array("id"=>7, "name"=>_("Luz"),           "type"=>1, "bydef"=>0);
-  $lsOPT[]=array("id"=>8, "name"=>_("Viento Avg"),    "type"=>1, "bydef"=>0);
-  $lsOPT[]=array("id"=>9, "name"=>_("Direcc. Avg"),   "type"=>1, "bydef"=>0);
-  $lsOPT[]=array("id"=>10, "name"=>_("Lluvia"),       "type"=>2, "bydef"=>1);
+  $lsOPT[]=array("id"=>1, "name"=>_("Temperature"),   "type"=>1, "bydef"=>1);
+  $lsOPT[]=array("id"=>2, "name"=>_("Wind"),        "type"=>1, "bydef"=>1);
+  $lsOPT[]=array("id"=>3, "name"=>_("Direction"),       "type"=>1, "bydef"=>1);
+  $lsOPT[]=array("id"=>4, "name"=>_("Rain"),        "type"=>1, "bydef"=>1);
+  $lsOPT[]=array("id"=>5, "name"=>_("Humidity"),       "type"=>1, "bydef"=>0);
+  $lsOPT[]=array("id"=>6, "name"=>_("Pressure"),"type"=>1, "bydef"=>0);
+  $lsOPT[]=array("id"=>7, "name"=>_("Light"),           "type"=>1, "bydef"=>0);
+  $lsOPT[]=array("id"=>8, "name"=>_("Wind Avg"),    "type"=>1, "bydef"=>0);
+  $lsOPT[]=array("id"=>9, "name"=>_("Direction Avg"),   "type"=>1, "bydef"=>0);
+  $lsOPT[]=array("id"=>10, "name"=>_("Rain"),       "type"=>2, "bydef"=>1);
 
 //  if(!isset($_GET["user"])) die("not user");
   if(!isset($_GET["user"])) $_GET["user"]="jc";
@@ -24,8 +24,8 @@ include "config.php";
   
 
   $existuser=false;
-  for($i=0;$i<count($validusers);$i++){
-		if($validusers[$i]==$user) {
+  for($i=0;$i<count($ValidUsers);$i++){
+		if($ValidUsers[$i]["user"]==$user) {
 			$existuser=true;
 			break;
 		}
@@ -66,7 +66,7 @@ include "config.php";
   // Graficas  
   if($fecha1!=""&&$fecha2!=""){
 	 $query="user=$user&lang=$idioma&d1=".date("Y-m-d",$mkf1)."&d2=".date("Y-m-d",$mkf2)."";
-	 echo "<div style=\"margin-left:10px;\"><hr/>"._("Desde")." ".date("d-m-Y",$mkf1)." "._("hasta")." ".date("d-m-Y",$mkf2)."<hr/>\r\n";
+	 echo "<div style=\"margin-left:10px;\"><hr/>"._("Since")." ".date("d-m-Y",$mkf1)." "._("until")." ".date("d-m-Y",$mkf2)."<hr/>\r\n";
      if($lsOPT[0]["value"]==1) echo "<a href=\"/graf.php?data&$query&w=tempc\" target=\"_blank\"><img  src=\"/graf.php?$query&w=tempc\"/></a><br/>\r\n";
      if($lsOPT[1]["value"]==1) echo "<a href=\"/graf.php?data&$query&w=windspeed\" target=\"_blank\"><img  src=\"/graf.php?$query&w=windspeed\"/></a><br/>\r\n";
      if($lsOPT[2]["value"]==1) echo "<a href=\"/graf.php?data&$query&w=winddir\" target=\"_blank\"><img  src=\"/graf.php?$query&w=winddir\"/></a><br/>\r\n";
@@ -165,7 +165,8 @@ global $lsOPT,$lsTYPE;
 
 //die("--");
 }
-  
+
+
 //---------------------------------------------------------------
 function ShowPerido($user,$fecha1,$fecha2,$idioma,$ayer){
 //---------------------------------------------------------------
@@ -177,11 +178,11 @@ global $lsOPT,$lsTYPE;
 	echo "<table><tr><td>";
 	
 	echo "<table><tr>".
-		"<td style=\"height:25px\">"._("Inic").": </td>".
+		"<td style=\"height:25px\">"._("Ini").": </td>".
 		"<td style=\"height:25px\"><input name=\"txtfecha1\" id=\"txtfecha1\" type=\"datapicker\" value=\"".($fecha1==""?date("Y-m-d",$ayer):$fecha1)."\" style=\"width:110px;\"></td> ".
-		"<td style=\"height:25px\"><input name=\"botDo\" id=\"botDo\" type=\"submit\" data-inline=\"true\" value=\""._("Ir")."\" data-mini=\"true\"></td>".
+		"<td style=\"height:25px\"><input name=\"botDo\" id=\"botDo\" type=\"submit\" data-inline=\"true\" value=\""._("GO")."\" data-mini=\"true\"></td>".
 		"</tr><tr>".
-		"<td style=\"height:25px\">"._("Fin").": </td>".
+		"<td style=\"height:25px\">"._("End").": </td>".
 		"<td style=\"height:25px\"><input name=\"txtfecha2\" id=\"txtfecha2\" type=\"datapicker\" value=\"".($fecha2==""?date("Y-m-d",$ayer):$fecha2)."\" style=\"width:110px;\"></td> ".
 		"<td>&nbsp;</td>".
 
@@ -201,7 +202,7 @@ global $lsOPT,$lsTYPE;
 		echo "<div class=\"ui-field-contain\">
 		<legend style=\"display: inline-block;height:1em;padding:0px;\">"._($lsTYPE[$j]["name"])."</legend>
 	    <select  name=\"$nn\" id=\"$nn\" data-native-menu=\"false\" multiple=\"multiple\" data-iconpos=\"left\">
-	        <option>"._("Elegir Opciones")."</option>";
+	        <option>"._("Choose Options")."</option>";
 		
 		for($i=0;$i<count($lsOPT);$i++){
 			if(strcmp($lsTYPE[$j]["id"],$lsOPT[$i]["type"])==0){
@@ -317,7 +318,7 @@ $(document).ready(function() {
 		  display : true, 
 		  left : '0', 
 		  right : '100',
-		  center : '"._("Viento")." km/h',
+		  center : '"._("Wind")." km/h',
 		  fontFamily : 'Arial', 
 		  fontColor : '#000', 
 		  fontSize : 12, 
@@ -360,7 +361,7 @@ $(document).ready(function() {
 		  display : true, 
 		  left : '-15', 
 		  right : '50',
-		  center : '"._("Temperatura")." ºC ',
+		  center : '"._("Temperature")." ºC ',
 		  fontFamily : 'Arial', 
 		  fontColor : '#000', 
 		  fontSize : 12, 
@@ -408,7 +409,7 @@ $(document).ready(function() {
 		  display : true, 
 		  left : '$ini', 
 		  right : '$fin"." l',
-		  center : '"._("Lluvia")." ".$aInfo["h"]."h ".$aInfo["m"]."m ',
+		  center : '"._("Rain")." ".$aInfo["h"]."h ".$aInfo["m"]."m ',
 		  fontFamily : 'Arial', 
 		  fontColor : '#000', 
 		  fontSize : 12, 
@@ -421,7 +422,7 @@ $(document).ready(function() {
   
   echo "
  $('#sellang').on('change', function(e) {
-	var v=$( \"#sellang option:selected\" ).text();
+	var v=$( \"#sellang option:selected\" ).val();
 	$('#frmlang').attr(\"action\", '".$_SERVER["PHP_SELF"]."?user=$user&lang='+v+'');
 	$('#frmlang').submit();	
   })  
@@ -434,7 +435,7 @@ $(document).ready(function() {
     return true;
   });
   
-  document.title = '"._("Estación Metereológica")."';
+  document.title = '"._("Weather Station")."';
 });
 </script>
 ";	
@@ -445,12 +446,16 @@ $(document).ready(function() {
 //---------------------------------------------------------------
 function ShowHeader($db,$user,$idioma,$fecha1,$fecha2,$ayer,&$lastrow){
 //---------------------------------------------------------------
+global $aLang;
+
+
+	getParametros();
+	
 @header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
 @header('Cache-Control: no-store, no-cache, must-revalidate');
 @header('Cache-Control: post-check=0, pre-check=0', FALSE);
 @header('Pragma: no-cache');
-
-	getParametros();
+	
 	echo "
 <!doctype html>
 <html lang=\"es\">
@@ -482,11 +487,11 @@ function ShowHeader($db,$user,$idioma,$fecha1,$fecha2,$ayer,&$lastrow){
 	<script src=\"//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js\"></script>
 	<script src=\"/Gauge/kuma-gauge.jquery.js\"></script>
 
- <style>	
- 
-.es-lang {background: url(/locale/spain.png) 5px 50% no-repeat; padding: 3px 0 3px 35px; font-size: 16px;}
-.en-lang {background: url(/locale/usa.png) 5px 50% no-repeat; padding: 3px 0 3px 35px; font-size: 16px;}
-
+ <style>\r\n\r\n";	
+ foreach ($aLang as $key=>$value){
+	 echo ".".$key."-lang {background: url(/locale/".$value["img"].") 5px 50% no-repeat; padding: 3px 0 3px 35px; font-size: 16px;}\r\n";
+ }
+echo "
  </style>
 ";
 
@@ -504,16 +509,18 @@ echo "
 		    <h1 class=\"ui-btn-left\">  			
 			
 			<form id=\"frmlang\" name=\"frmlang\" method=\"post\" action=\"".$_SERVER["PHP_SELF"]."?user=$user\" data-ajax=\"false\"> 
-			<select id=\"sellang\" name=\"sellang\" data-mini=\"true\" class=\"select-with-images\">
-			<option class=\"es-lang\" ".(strcasecmp($idioma,"es")==0?"selected":"").">es</option>
-			<option class=\"en-lang\" ".(strcasecmp($idioma,"en_US.utf8")==0?"selected":"").">en</option>
+			<select id=\"sellang\" name=\"sellang\" data-mini=\"true\" class=\"select-with-images\">\r\n";
+ foreach ($aLang as $key=>$value){
+			echo "<option value=\"$key\" class=\"".$key."-lang\" ".(strcasecmp($idioma,$key)==0?"selected":"")."> &nbsp;".$value["name"]."</option>\r\n";
+ }
+		echo "
 			</select>
 			
 			</h1>
 			
             <h1 class=\"ui-btn-right\">  			
 			</form>
-			"._("Estaci&oacute;n Metereol&oacute;gica")."&nbsp;</h1>";
+			"._("Weather Station")."&nbsp;</h1>";
 		echo "
         </div><!-- /header -->
         <div role=\"main\" class=\"ui-conten jqm-contentt\">";
@@ -553,7 +560,7 @@ function ShowActual($db,$user,&$lastrow){
   $grados=number_format($row["tempc"],2);
   echo "<table border=\"0\"><tr>";
 //  echo "<td align=\"center\">&nbsp;&nbsp;&Uacute;ltima&nbsp;&nbsp;<br/>Hora: </td>";
-  echo "<td align=\"center\">"._("&Uacute;timo").":<br/>".date("d-m-Y",$mkf)."<br/>".date("H:i:s",$mkf)."</td>";
+  echo "<td align=\"center\">"._("Last").":<br/>".date("d-m-Y",$mkf)."<br/>".date("H:i:s",$mkf)."</td>";
   echo "<td><div class=\"js-gauge vtemp gauge\"></div></td>";
   if(isMobile()){
 	  echo "</tr><tr>";

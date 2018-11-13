@@ -3,9 +3,8 @@
 define ("def_graph_width", 400);
 define ("def_graph_height", 300);
 
-$ValidUsers=array(array("user"=>"jc",   "inputkey"=>"xxxxxxxxx"),
-                  array("user"=>"user2","inputkey"=>"xxxxxxxxx"));
-$validusers=array("jc","rbk");
+$ValidUsers=array(array("user"=>"jc",   "inputkey"=>"X010101xxX"),
+                  array("user"=>"user","inputkey"=>"X010101xxX"));
 $diferencedays=60; // DIAS DE DIFERENCIA PERMITIDOS A MOSTRAR EN CONSULTA
 
 
@@ -13,7 +12,7 @@ $diferencedays=60; // DIAS DE DIFERENCIA PERMITIDOS A MOSTRAR EN CONSULTA
 define("save_each",4*60*60); // 4 horas
 
 
-$db=@mysqli_connect("127.0.0.1","tiempo","xxxxxxxx","tiempo");
+$db=@mysqli_connect("127.0.0.1","tiempo","MvhY2SIieNzar2v","tiempo");
 if(!$db){
     echo "Error: No se pudo conectar a MySQL." . "<br/>";
     echo "errno: " . mysqli_connect_errno() . "<br/>";
@@ -21,37 +20,45 @@ if(!$db){
     exit;
 }
 
+
+
+
+
+
+
+
+
+
 $appname="weatherstation";
 $rutalanguage=__DIR__."/locale";
 
-$idioma="en_US.utf8";
+$aLang["en"]=array("name"=>"English","img"=>"usa.png",  "set"=>"en_US.utf8"); // 0 - Default
+$aLang["es"]=array("name"=>"Español","img"=>"spain.png","set"=>"es_ES.utf8");
+
 if(isset($_GET["lang"])){
-        if(strcasecmp($_GET["lang"],"es")==0){
-                $idioma="es";
-                @setcookie('idioma','es');
-        }
-    else @setcookie('idioma','en_US.utf8');
-}else{
-        if(isset($_COOKIE['idioma']))  if(strcasecmp($_COOKIE['idioma'],"es")==0) $idioma="es";
+	$idioma=$_GET["lang"];
+}elseif(isset($_COOKIE['idioma'])){  
+	$idioma=$_COOKIE['idioma'];
 }
-//die($idioma."--3");
 
-if(strcasecmp($idioma,"en_US.utf8")==0){	
-        @putenv ("LANG=$idioma");
-        @putenv ("LC_ALL=$idioma");
-        @setlocale(LC_ALL, $idioma);
+$bidioma=false;
+if(isset($idioma)) 
+	foreach ($aLang as $key => $value){
+		if(strcmp($key,$idioma)==0){
+			$bidioma=true;
+			break;
+		}
+	}
+if(!$bidioma) $idioma="en";
+@setcookie('idioma',$idioma);
+$_COOKIE["idioma"]=$idioma;
 
-        @bindtextdomain($appname, "$rutalanguage");
-        @textdomain($appname);
-		
-}else{ // el setlocale fallaría, se conserva el idioma original
-        @putenv ("LANG=$idioma");
-        @putenv ("LC_ALL=$idioma");
-        @setlocale(LC_ALL, $idioma);
+@putenv ("LANG=".$aLang[$idioma]["set"]);
+@putenv ("LC_ALL=".$aLang[$idioma]["set"]);
+@setlocale(LC_ALL, $aLang[$idioma]["set"]);
 
-        @bindtextdomain($appname, "$rutalanguage");
-        @textdomain($appname);
-}
+@bindtextdomain($appname, "$rutalanguage");
+@textdomain($appname);
 
 @date_default_timezone_set("Europe/Madrid");
 
