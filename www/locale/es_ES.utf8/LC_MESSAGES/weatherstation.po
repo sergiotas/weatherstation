@@ -1,0 +1,103 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-12 21:12+0100\n"
+"PO-Revision-Date: 2018-11-12 21:15+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
+
+#: ../index.php:7 ../graf.php:111
+msgid "Average"
+msgstr "Promedio"
+
+#: ../index.php:8 ../graf.php:108
+msgid "Accumulated"
+msgstr "Acumulado"
+
+#: ../index.php:10 ../index.php:363 ../graf.php:73
+msgid "Temperature"
+msgstr "Temperatura"
+
+#: ../index.php:11 ../index.php:320 ../graf.php:76 ../graf.php:97
+msgid "Wind"
+msgstr "Viento"
+
+#: ../index.php:12 ../graf.php:79 ../graf.php:100
+msgid "Direction"
+msgstr "Dirección"
+
+#: ../index.php:13 ../index.php:19 ../index.php:411 ../graf.php:82
+msgid "Rain"
+msgstr "Lluvia"
+
+#: ../index.php:14 ../graf.php:88
+msgid "Humidity"
+msgstr "Humedad"
+
+#: ../index.php:15 ../graf.php:85
+msgid "Pressure"
+msgstr "Presión"
+
+#: ../index.php:16 ../graf.php:91
+msgid "Light"
+msgstr "Luz"
+
+#: ../index.php:17
+msgid "Wind Avg"
+msgstr "Viento Avg"
+
+#: ../index.php:18
+msgid "Direction Avg"
+msgstr "Dirección Avg"
+
+#: ../index.php:69
+msgid "Since"
+msgstr "Desde"
+
+#: ../index.php:69
+msgid "until"
+msgstr "hasta"
+
+#: ../index.php:180
+msgid "Ini"
+msgstr "Inic"
+
+#: ../index.php:182
+msgid "GO"
+msgstr "Ir"
+
+#: ../index.php:184
+msgid "End"
+msgstr "Fin"
+
+#: ../index.php:204
+msgid "Choose Options"
+msgstr "Elegir Opciones"
+
+#: ../index.php:437 ../index.php:516
+msgid "Weather Station"
+msgstr "Estación Metereológica"
+
+#: ../index.php:556
+msgid "Last"
+msgstr "Último"
+
+#: ../graf.php:268
+msgid "hours"
+msgstr "horas"
+
+#: ../graf.php:270
+msgid "days"
+msgstr "días"
