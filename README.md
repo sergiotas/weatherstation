@@ -39,7 +39,7 @@ WeatherStation une diferentes tecnologías para conseguir su propósito. Los ele
 	
 ## Example
 
-Home Weather Sation (http://tiempo.avisame.club:8088/)
+
 
 ## License
 
